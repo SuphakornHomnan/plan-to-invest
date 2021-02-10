@@ -16,9 +16,7 @@
  $ stack ghci
  Prelude> main
 ```
+## Document
+ * [InvestPlan]() : `POST /saving` 
+ * [RetirePlan]() : `POST /retire`
 
-## Set Random Module
-```shell
- Prelude> :set -package random
- Prelude> :r
-```
