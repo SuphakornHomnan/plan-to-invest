@@ -16,7 +16,5 @@
  $ stack ghci
  Prelude> main
 ```
-## Document
- * [InvestPlan]() : `POST /saving` 
- * [RetirePlan]() : `POST /retire`
+
 
