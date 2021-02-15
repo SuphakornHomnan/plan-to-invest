@@ -37,11 +37,12 @@ import qualified Text.Blaze.Html
 import Text.Blaze.Html.Renderer.Utf8
 import Prelude ()
 
+
+-- unsafePerformIO $ getStdRandom $ randomR (1,999999999) 
+
 -- Index router
-type UserAPI =
-    "money" :> Capture "month" Int :> Capture "year" Int :> Get '[JSON] Money
-    :<|> "saving" :> ReqBody '[JSON] SavingInfo :> Post '[JSON] ResponseInfo 
-    :<|> "retire" :> ReqBody '[JSON] RetireInfo :> Post '[JSON] ResponseRetire
+type UserAPI = "api":>"saving" :> ReqBody '[JSON] SavingInfo :> Post '[JSON] ResponseInfo 
+          :<|> "api":>"retire" :> ReqBody '[JSON] RetireInfo :> Post '[JSON] ResponseRetireฺ
 -- Model Request
 
 data SavingInfo = SavingInfo
@@ -56,77 +57,74 @@ data RetireInfo = RetireInfo
   {
     nowAge :: Float,
     retireAge :: Float,
-    asset :: Float
+    dieAge :: Float,
+    assetPerMonth :: Float
   } deriving Generic
 instance FromJSON RetireInfo
 instance ToJSON RetireInfo
 
-data RetireResult = RetireResult
-  {
-    savingMonth :: Float,
-    levelReq :: Float
-  } deriving Generic
-instance FromJSON RetireResult
-instance ToJSON RetireResult
-
 -- Model Response
-data Money = Money
-  {
-    month :: Int,
-    year :: Int
-  } deriving Generic
-instance ToJSON Money
 
 data ResponseInfo = ResponseInfo 
   {
     leverage :: Float,
     oneYear :: Float,
-    threeYear :: Float,
     fiveYear :: Float,
     tenYear :: Float,
-    thrityYear :: Float
+    fifteenYear :: Float,
+    twentyYear :: Float,
+    twentyFiveYear :: Float,
+    thrityYear :: Float,
+    thrityFiveYear :: Float,
+    fortyYear :: Float
   } deriving Generic
 instance ToJSON ResponseInfo
 
-data ResponseRetire = ResponseRetire
+data ResponseRetireฺ = ResponseRetireฺ
   {
-    _id :: Int,
-    savingMoney :: Float
+    totalAsset :: Float,
+    liveOnAge :: Float
   } deriving Generic
-instance ToJSON ResponseRetire
+instance ToJSON ResponseRetireฺ
+
 
 -- Controller
 
 resultForInvestPlan :: SavingInfo -> ResponseInfo
-resultForInvestPlan res = ResponseInfo leverage' oneYear' threeYear' fiveYear' tenYear' thrityYear'
+resultForInvestPlan res = ResponseInfo leverage' oneYear' fiveYear' tenYear' fifteenYear' twentyYear' twentyFiveYear' thrityYear' thrityFiveYear' fortyYear'
 
   where 
-        ans = foldl (\acc cur -> acc+ (value res)) 0 [1..12]
+        ans = foldl (\acc cur -> acc+ value res) 0 [1..12]
         leverage' = multi res
-        oneYear' = foldl (\acc cur -> ans + acc +((ans+acc)*((multi res)/100)) ) 0 [1]
-        threeYear' = foldl (\acc cur -> ans + acc +((ans+acc)*((multi res)/100)) ) 0 [1..3]
-        fiveYear' = foldl (\acc cur -> ans + acc +((ans+acc)*((multi res)/100)) ) 0 [1..5]
-        tenYear' = foldl (\acc cur -> ans + acc +((ans+acc)*((multi res)/100)) ) 0 [1..10]
-        thrityYear' = foldl (\acc cur -> ans + acc +((ans+acc)*((multi res)/100)) ) 0 [1..30]
+        oneYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1]
+        fiveYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..5]
+        tenYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..10]
+        fifteenYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..15]
+        twentyYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..20]
+        twentyFiveYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..25]
+        thrityYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..30]
+        thrityFiveYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..35]
+        fortyYear' = foldl (\acc cur -> ans + acc +((ans+acc)*(leverage'/100)) ) 0 [1..40]
+
+
  
-resultForRetirePlan :: RetireInfo -> ResponseRetire
-resultForRetirePlan res = ResponseRetire _id' savingMoney'
+resultForRetirePlan :: RetireInfo -> ResponseRetireฺ
+resultForRetirePlan res = ResponseRetireฺ totalAsset' liveOnAge'
 
   where
-        _id' = unsafePerformIO $ getStdRandom $ randomR (1,999999999) 
-        savingMoney' = (asset res) / ((((retireAge res) - (nowAge res))*12))
+        totalAsset' = assetPerMonth res*12*(dieAge res - retireAge res)
+        liveOnAge' = dieAge res - retireAge res
+
+-- secondResultForRetirePlan :: SecondRetireInfo ->
 
 -- index controller
 router :: Server UserAPI
-router = money
-    :<|> results
+router = results
     :<|> retire
-  where money :: Int -> Int -> Handler Money
-        money month year = return (Money month year)
-        
+  where 
         results :: SavingInfo -> Handler ResponseInfo
         results clientInfo = return (resultForInvestPlan clientInfo)
-        retire :: RetireInfo -> Handler ResponseRetire
+        retire :: RetireInfo -> Handler ResponseRetireฺ
         retire clientRequest = return (resultForRetirePlan clientRequest)
 
 -- proxy

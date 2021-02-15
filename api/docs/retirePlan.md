@@ -1,8 +1,8 @@
 # RetirePlan
 
-Used for find retirement plan
+Used for find amount year that live on and total assets
 
-**URL** : `/retire`
+**URL** : `/api/retire`
 
 **Method** : `POST`
 
@@ -12,9 +12,10 @@ Used for find retirement plan
 
 ```json
 {
-    "nowAge": "[your age at present]",
-    "retireAge": "[your age that you think you will retire]",
-    "asset": "[Total asset that you want when you retired]"
+    "nowAge": "[your age now]",
+    "retireAge": "[your reitre age]",
+    "dieAge": "[your die age]",
+    "assetPerMonth": "[your money that you must use per month]"
 }
 ```
 
@@ -22,9 +23,10 @@ Used for find retirement plan
 
 ```json
 {
-    "nowAge": 20,
+    "nowAge": 30,
     "retireAge": 50,
-    "asset": 1000000
+    "dieAge": 80,
+    "assetPerMonth": 17000
 }
 ```
 
@@ -36,7 +38,7 @@ Used for find retirement plan
 
 ```json
 {
-    "savingMoney": 2777.7778,
-    "_id": 467166901
+    "liveOnAge": 30,
+    "totalAsset": 6120000
 }
 ```

@@ -16,5 +16,11 @@
  $ stack ghci
  Prelude> main
 ```
+## OR
+
+```shell
+ $ stack build
+ $ stack exec name-project-exe
+```
 
 
