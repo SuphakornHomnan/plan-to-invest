@@ -7,7 +7,7 @@ const Routes = () => {
   return (
         <BrowserRouter>
             <Switch>
-                    <Route />
+
             </Switch>
         </BrowserRouter>
   )

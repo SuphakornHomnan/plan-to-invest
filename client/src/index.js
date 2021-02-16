@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import Main from './pages/main'
+// import Main from './pages/main'
+import InvestPlan from './pages/investPlan'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main />
+    <InvestPlan />
   </React.StrictMode>,
   document.getElementById('root')
 )
