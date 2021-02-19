@@ -1,0 +1,78 @@
+.container-retire-plan {
+    max-width: 1920px;
+    max-height: 1280px;
+    display: flex;
+    flex-direction: column;
+    margin: 5vw 10vw 10vw 20vw;
+}
+
+.sub-container-retire-form,
+.sub-container2-retire-form {
+    display: flex;
+    flex-direction: row;
+}
+
+.your-age-container,
+.your-retire-age-container,
+.your-die-age-container,
+.your-asset-container {
+    display: flex;
+    flex-direction: column;
+    font-family: Helvetica Neue;
+    color:#FFF;
+    font-size: 20px;
+
+}
+
+.your-age-input,
+.your-retire-input,
+.your-die-age-input,
+.your-asset-input {
+    padding: 1.25vw 6vw;
+    border: 2px solid;
+    border-radius: 75px;
+    background-color: #F0EEE8;
+    border-color: #FFF;
+    width: 100%;
+}
+
+.your-age-label,
+.your-retire-label {
+    margin-bottom: 1vh;
+}
+
+.your-die-age-label,
+.your-asset-label {
+    margin-bottom: 1vh;
+    margin-top: 10vh;
+}
+.your-age-container,
+.your-die-age-container {
+    margin-right: 15vw;
+}
+.bth-enter-retire-form {
+    padding: 1vw;
+    color: #FFF;
+    background-color: #C3DDD6;
+    border: 2px solid;
+    border-radius: 75px;
+    border-color: #FFF;
+    width: 30%;
+    font-size: 20px;
+}
+
+.retire-enter-position-form{
+    margin-top: 10vh;
+    margin-left: 20vw;
+}
+
+.bth-enter-retire-form:hover,
+.your-age-input:hover,
+.your-retire-input:hover,
+.your-die-age-input:hover,
+.your-asset-input:hover{
+    background-color: #BEC6D5;
+    color: black
+}
+
+

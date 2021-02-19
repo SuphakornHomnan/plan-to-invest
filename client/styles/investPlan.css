@@ -6,7 +6,7 @@
     box-sizing: border-box;
 }
 
-.container {
+.container-invest-plan {
     max-width: 1920px;
     max-height: 1280px;
     display: flex;
