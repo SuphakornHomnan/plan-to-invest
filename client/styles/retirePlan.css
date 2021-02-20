@@ -75,4 +75,99 @@
     color: black
 }
 
+.retire-chart-container {
+    display: flex;
+    flex-direction: row;
+    margin: 10vh;
+}
 
+.detail-retire-container {
+    /* background-color: red; */
+    margin-left: 5vw;
+}
+.retire-space {
+    height: 5%;
+}
+.retire-detail-one,
+.retire-detail-three
+ {
+    height: 25%;
+}
+
+.retire-detail-two{
+    height: 40%;
+}
+
+
+.retire-show-year-one {
+    display: flex;
+    flex-direction: row;
+}
+
+.retire-age-number {
+    font-size: 75px;
+    margin-top: 1vh;
+    background-color: #F0EEE8;
+    width: 70%;
+    text-align: center;
+    border-radius: 75px;
+
+}
+
+.retire-age-number-two {
+    background-color: #F0EEE8;
+    font-size: 40px;
+    margin-top: 1vh;
+    height: 50%;
+    width: 70%;
+    text-align: center;
+    border-radius: 75px;
+    padding: 0.25vw;
+}
+
+.retire-age-number-three {
+    background-color: #F0EEE8;
+    font-size: 30px;
+    margin-top: 1vh;
+    height: 50%;
+    width: 70%;
+    text-align: center;
+    border-radius: 75px;
+    padding: 1vw;
+
+}
+
+.retire-age-number-year {
+    width: 30%;
+
+    margin-left: 1vw;
+    font-size: 75px;
+}
+
+.retire-age-number-year-two {
+    width: 30%;
+    padding: 1vw;
+
+    margin-left: 1vw;
+    font-size: 50px;
+}
+
+.retire-age-number-year-three {
+    width: 30%;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 1vw;
+
+}
+
+.retire-age-number-year-four {
+    width: 30%;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 1vw;
+
+}
