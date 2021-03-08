@@ -19,21 +19,24 @@
     display: flex;
     flex-direction: column;
     font-family: Helvetica Neue;
-    color:#FFF;
+    color:black;
     font-size: 20px;
 
 }
 
-.your-age-input,
-.your-retire-input,
-.your-die-age-input,
-.your-asset-input {
+
+.your-retire-input
+ {
     padding: 1.25vw 6vw;
     border: 2px solid;
     border-radius: 75px;
     background-color: #F0EEE8;
     border-color: #FFF;
     width: 100%;
+}
+
+.your-retire-input:focus{
+    outline: none;
 }
 
 .your-age-label,
@@ -59,6 +62,10 @@
     border-color: #FFF;
     width: 30%;
     font-size: 20px;
+}
+
+.bth-enter-retire-form:focus{
+    outline: none;
 }
 
 .retire-enter-position-form{
@@ -107,7 +114,8 @@
 .retire-age-number {
     font-size: 75px;
     margin-top: 1vh;
-    background-color: #F0EEE8;
+    background-color: #BDC7D5;
+    color: #FFF;
     width: 70%;
     text-align: center;
     border-radius: 75px;
@@ -115,7 +123,8 @@
 }
 
 .retire-age-number-two {
-    background-color: #F0EEE8;
+    background-color: #BDC7D5;
+    color: #FFF;
     font-size: 40px;
     margin-top: 1vh;
     height: 50%;
@@ -126,7 +135,8 @@
 }
 
 .retire-age-number-three {
-    background-color: #F0EEE8;
+    background-color: #BDC7D5;
+    color: #FFF;
     font-size: 30px;
     margin-top: 1vh;
     height: 50%;

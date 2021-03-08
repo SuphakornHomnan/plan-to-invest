@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    background-color: #91A7D0;
+    /* background-color: #91A7D0; */
 
     box-sizing: border-box;
 }
@@ -17,7 +17,7 @@
     text-align: center;
     font-size: 70px;
     font-family: Helvetica Neue;
-    color:#FFF;
+    color:black;
 }
 
 .bth-feature-one {
@@ -26,7 +26,7 @@
     border: 2px solid;
     font-size: 30px;
     border-radius: 75px;
-    background-color:#91A7D0;
+    background-color:#BDC7D5;
     border-color: #FFF;
     color: #FFF;
     width: 45%;
@@ -38,7 +38,7 @@
     border-radius: 75px;
     font-size: 30px;
     margin-left: auto;
-    background-color:#91A7D0;
+    background-color:#BDC7D5;
     border-color: #FFF;
     color: #FFF;
     width: 45%;
@@ -49,6 +49,11 @@
 .bth-feature-two:hover {
     background-color: #F0EEE9;
     color: black
+}
+
+.bth-feature-one:focus,
+.bth-feature-two:focus {
+    outline: none;
 }
 
 @media screen and (max-width: 1024px){
