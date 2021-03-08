@@ -36,6 +36,9 @@ import Text.Blaze
 import qualified Text.Blaze.Html
 import Text.Blaze.Html.Renderer.Utf8
 import Prelude ()
+import Network.Wai.Middleware.Cors
+
+
 
 
 -- unsafePerformIO $ getStdRandom $ randomR (1,999999999) 
@@ -133,7 +136,7 @@ userAPI = Proxy
 
 -- run service
 app :: Application
-app = serve userAPI router
+app = cors ( const $ Just (simpleCorsResourcePolicy  { corsRequestHeaders = ["Content-Type"] }) ) (serve userAPI router) 
 
 -- run on port
 start :: IO ()
