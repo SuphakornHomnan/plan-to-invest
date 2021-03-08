@@ -1,6 +1,11 @@
-import React from "react";
+import React, {useState} from 'react'
+import Link from 'next/link'
 
 const RetirePlan = () => {
+  const [age, setAge] = useState(0)
+  const [retireAge, setRetireAge] = useState(0)
+  const [dieAge, setDieAge] = useState(0)
+  const [assetMonth, setAssetMonth] = useState(0)
   return (
     <>
       <div className="container-retire-plan">
@@ -8,7 +13,7 @@ const RetirePlan = () => {
           <div className="your-age-container">
             <label className="your-age-label">Your age now</label>
             <input
-              className="your-age-input"
+              className="your-retire-input"
               type="text"
               placeholder="your age now ..."
             />
@@ -28,7 +33,7 @@ const RetirePlan = () => {
               Your age that you think to die
             </label>
             <input
-              className="your-die-age-input"
+              className="your-retire-input"
               type="text"
               placeholder="Your die age ..."
             />
@@ -38,18 +43,20 @@ const RetirePlan = () => {
               Your asset that you use per month
             </label>
             <input
-              className="your-asset-input"
+              className="your-retire-input"
               type="text"
               placeholder="asset per month ..."
             />
           </div>
         </div>
         <div className="retire-enter-position-form">
-          <button className="bth-enter-retire-form">Enter</button>
+          <Link href={`/retire/result?age=${age}&retireAge=${retireAge}&dieAge=${dieAge}&assetMonth=${assetMonth}`} >
+            <button className="bth-enter-retire-form">Enter</button>
+          </Link>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default RetirePlan;
+export default RetirePlan
