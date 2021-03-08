@@ -50,6 +50,9 @@ library
     , blaze-html
     , servant 
     , random
+    , wai-cors
+
+
   default-language: Haskell2010
 
 executable api-exe
@@ -66,7 +69,8 @@ executable api-exe
     , servant-server
     , wai
     , warp
-    
+    , wai-cors
+
   default-language: Haskell2010
 
 test-suite api-test
