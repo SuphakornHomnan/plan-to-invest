@@ -76,7 +76,6 @@ const ResultInvestPlan = () => {
   const { saving } = router.query
   const value = parseFloat(saving)
 
-
   useEffect(async () => {
     const res: {
       oneYear: number
@@ -146,7 +145,73 @@ const ResultInvestPlan = () => {
 
         <Line type="monotone" dataKey="etfFundAndStock" stroke="#A05069" />
       </LineChart>
-      <div className="section-two-invest">Hi</div>
+      <div className="section-two-invest">
+        <table>
+          <thead>
+            <tr>
+              <th rowSpan={2}>Years</th>
+              <th colSpan={5}>Investment</th>
+            </tr>
+            <tr>
+              <th>Keep(0%)</th>
+              <th>ฝากประจำ(1.5%)</th>
+              <th>กองทุนตราหนี้(3.5%)</th>
+              <th>กองทุนหุ้น(6%)</th>
+              <th>กองทุนETF & เล่นหุ้น(10%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5</td>
+              <td>1000000</td>
+              <td>1250000</td>
+              <td>1500000</td>
+              <td>1750000</td>
+              <td>2000000</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>1000000</td>
+              <td>1250000</td>
+              <td>1500000</td>
+              <td>1750000</td>
+              <td>2000000</td>
+            </tr>
+            <tr>
+              <td>15</td>
+              <td>1000000</td>
+              <td>1250000</td>
+              <td>1500000</td>
+              <td>1750000</td>
+              <td>2000000</td>
+            </tr>
+            <tr>
+              <td>20</td>
+              <td>1000000</td>
+              <td>1250000</td>
+              <td>1500000</td>
+              <td>1750000</td>
+              <td>2000000</td>
+            </tr>
+            <tr>
+              <td>25</td>
+              <td>1000000</td>
+              <td>1250000</td>
+              <td>1500000</td>
+              <td>1750000</td>
+              <td>2000000</td>
+            </tr>
+            <tr>
+              <td>30</td>
+              <td>1000000</td>
+              <td>1250000</td>
+              <td>1500000</td>
+              <td>1750000</td>
+              <td>2000000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
