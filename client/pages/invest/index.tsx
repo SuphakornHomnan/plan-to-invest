@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 
 const InvestPlan = () => {
-  const [saving, setSaving] = useState(0)
+  const [saving, setSaving] = useState<string | null>(null)
   return (
     <>
       <div className="container-invest-plan">
@@ -12,7 +12,7 @@ const InvestPlan = () => {
           className="saving-input"
           type="text"
           placeholder="your saving per month ..."
-          onChange={({ target }) => setSaving(parseInt(target.value))}
+          onChange={({ target }) => setSaving(target.value)}
         />
         <Link href={`/invest/result?saving=${saving}`}>
           <button className="bth-enter">Enter</button>

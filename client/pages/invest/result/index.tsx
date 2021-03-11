@@ -7,7 +7,6 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  ReferenceLine,
 } from 'recharts'
 import { useRouter } from 'next/router'
 import api from '../../../api'
@@ -71,60 +70,72 @@ const data = [
   },
 ]
 
+interface InvestInfo {
+  oneYear: number | null
+  fiveYear: number | null
+  tenYear: number | null
+  fifteenYear: number | null
+  twentyYear: number | null
+  twentyFiveYear: number | null
+  thrityYear: number | null
+  thrityFiveYear: number | null
+  fortyYear: number | null
+  leverage: number | null
+}
+
 const ResultInvestPlan = () => {
   const router = useRouter()
   const { saving } = router.query
   const value = parseFloat(saving)
+  console.log(value)
 
+  const res: {
+    oneYear: number
+    fiveYear: number
+    tenYear: number
+    fifteenYear: number
+    twentyYear: number
+    twentyFiveYear: number
+    thrityYear: number
+    thrityFiveYear: number
+    fortyYear: number
+    leverage: number
+  }[] = []
   useEffect(async () => {
-    const res: {
-      oneYear: number
-      fiveYear: number
-      tenYear: number
-      fifteenYear: number
-      twentyYear: number
-      twentyFiveYear: number
-      thrityYear: number
-      thrityFiveYear: number
-      fortyYear: number
-      leverage: number
-    }[] = []
     try {
-      res.push(
-        await api.post('/saving', {
+      if (value) {
+        const res1 = await api.post<InvestInfo>('/saving', {
           value,
           multi: 0,
         })
-      )
-      res.push(
-        await api.post('/saving', {
+        res.push(res1.data)
+        const res2 = await api.post('/saving', {
           value,
           multi: 1.5,
         })
-      )
-      res.push(
-        await api.post('/saving', {
+        res.push(res2.data)
+        const res3 = await api.post('/saving', {
           value,
           multi: 3.5,
         })
-      )
-      res.push(
-        await api.post('/saving', {
+        res.push(res3.data)
+        const res4 = await api.post('/saving', {
           value,
           multi: 6,
         })
-      )
-      res.push(
-        await api.post('/saving', {
+        res.push(res4.data)
+        const res5 = await api.post('/saving', {
           value,
           multi: 10,
         })
-      )
-      console.log(res)
+        res.push(res5.data)
+        console.log(res)
+      }
     } catch (error) {
       alert(error.message)
     }
-  }, [])
+  }, [value])
+  console.log(res)
   return (
     <div className="row">
       <LineChart
@@ -146,7 +157,7 @@ const ResultInvestPlan = () => {
         <Line type="monotone" dataKey="etfFundAndStock" stroke="#A05069" />
       </LineChart>
       <div className="section-two-invest">
-        <table>
+        <table className="invest-table">
           <thead>
             <tr>
               <th rowSpan={2}>Years</th>
@@ -154,20 +165,20 @@ const ResultInvestPlan = () => {
             </tr>
             <tr>
               <th>Keep(0%)</th>
-              <th>ฝากประจำ(1.5%)</th>
-              <th>กองทุนตราหนี้(3.5%)</th>
-              <th>กองทุนหุ้น(6%)</th>
-              <th>กองทุนETF & เล่นหุ้น(10%)</th>
+              <th>Fixed deposit(1.25%)</th>
+              <th>Bond Fund(3.5%)</th>
+              <th>Equity Fund(6%)</th>
+              <th>ETF Fund or Stocks(10%)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>5</td>
-              <td>1000000</td>
-              <td>1250000</td>
-              <td>1500000</td>
-              <td>1750000</td>
-              <td>2000000</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>1000</td>
+              <td>1000</td>
             </tr>
             <tr>
               <td>10</td>
