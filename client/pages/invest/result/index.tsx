@@ -1,4 +1,8 @@
-import React, { useEffect } from 'react'
+/* eslint-disable multiline-ternary */
+/* eslint-disable operator-linebreak */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable array-callback-return */
+import React, { useState, useEffect } from 'react'
 import {
   LineChart,
   Line,
@@ -10,138 +14,81 @@ import {
 } from 'recharts'
 import { useRouter } from 'next/router'
 import api from '../../../api'
-
-const data = [
-  {
-    name: '1 Years',
-    notRetureRate: 120000,
-    fixedDeposit: 121500,
-    bondFund: 124200,
-    equityFund: 127200,
-    etfFundAndStock: 132000,
-  },
-  {
-    name: '5 Years',
-    notRetureRate: 600000,
-    fixedDeposit: 622878.56,
-    bondFund: 666018.25,
-    equityFund: 717038.2,
-    etfFundAndStock: 805873.2,
-  },
-  {
-    name: '10 Years',
-    notRetureRate: 1200000,
-    fixedDeposit: 1285672.5,
-    bondFund: 1457039,
-    equityFund: 1676597.1,
-    etfFundAndStock: 2103740,
-  },
-  {
-    name: '15 Years',
-    notRetureRate: 1800000,
-    fixedDeposit: 1990939.6,
-    bondFund: 2396523.5,
-    equityFund: 2960703.5,
-    etfFundAndStock: 4193967.5,
-  },
-  {
-    name: '20 Years',
-    notRetureRate: 2400000,
-    fixedDeposit: 2741401.8,
-    bondFund: 3512336.5,
-    equityFund: 4679127,
-    etfFundAndStock: 7560299.5,
-  },
-  {
-    name: '25 Years',
-    notRetureRate: 3000000,
-    fixedDeposit: 3539955,
-    bondFund: 4837572.5,
-    equityFund: 6978765.5,
-    etfFundAndStock: 12981811,
-  },
-  {
-    name: '30 Years',
-    notRetureRate: 3600000,
-    fixedDeposit: 4389681.5,
-    bondFund: 6411537,
-    equityFund: 10056201,
-    etfFundAndStock: 21713208,
-  },
-]
-
-interface InvestInfo {
-  oneYear: number | null
-  fiveYear: number | null
-  tenYear: number | null
-  fifteenYear: number | null
-  twentyYear: number | null
-  twentyFiveYear: number | null
-  thrityYear: number | null
-  thrityFiveYear: number | null
-  fortyYear: number | null
-  leverage: number | null
-}
+import { InvestInfo } from '../../../interface/invest'
+import { setData } from '../../../helper'
 
 const ResultInvestPlan = () => {
   const router = useRouter()
   const { saving } = router.query
   const value = parseFloat(saving)
-  console.log(value)
+  const [resList, setRes] = useState([])
+  const [data2, setDataState] = useState([])
+  const [trigger, setTrigger] = useState(true)
 
   const res: {
-    oneYear: number
-    fiveYear: number
-    tenYear: number
-    fifteenYear: number
-    twentyYear: number
-    twentyFiveYear: number
-    thrityYear: number
-    thrityFiveYear: number
-    fortyYear: number
     leverage: number
+    indexYear: [number]
+    asset: [number]
   }[] = []
-  useEffect(async () => {
-    try {
-      if (value) {
-        const res1 = await api.post<InvestInfo>('/saving', {
-          value,
-          multi: 0,
-        })
-        res.push(res1.data)
-        const res2 = await api.post('/saving', {
-          value,
-          multi: 1.5,
-        })
-        res.push(res2.data)
-        const res3 = await api.post('/saving', {
-          value,
-          multi: 3.5,
-        })
-        res.push(res3.data)
-        const res4 = await api.post('/saving', {
-          value,
-          multi: 6,
-        })
-        res.push(res4.data)
-        const res5 = await api.post('/saving', {
-          value,
-          multi: 10,
-        })
-        res.push(res5.data)
-        console.log(res)
+
+  useEffect(() => {
+    async function fetchData () {
+      try {
+        if (value) {
+          const res1 = await api.post<InvestInfo>('/saving', {
+            value,
+            multi: 0,
+            year: 25,
+          })
+          res.push(res1.data)
+          const res2 = await api.post<InvestInfo>('/saving', {
+            value,
+            multi: 1.5,
+            year: 25,
+          })
+          res.push(res2.data)
+          const res3 = await api.post<InvestInfo>('/saving', {
+            value,
+            multi: 3.5,
+            year: 25,
+          })
+          res.push(res3.data)
+          const res4 = await api.post<InvestInfo>('/saving', {
+            value,
+            multi: 6,
+            year: 25,
+          })
+          res.push(res4.data)
+          const res5 = await api.post<InvestInfo>('/saving', {
+            value,
+            multi: 10,
+            year: 25,
+          })
+          res.push(res5.data)
+          setRes(res)
+        }
+      } catch (error) {
+        alert(error.message)
       }
-    } catch (error) {
-      alert(error.message)
     }
+    fetchData()
   }, [value])
-  console.log(res)
+
+  useEffect(() => {
+    if (trigger) {
+      if (resList.length === 5) {
+        setDataState(setData(resList))
+        setTrigger(false)
+      }
+    }
+  }, [resList])
+  console.log(data2)
   return (
     <div className="row">
       <LineChart
         width={900}
         height={600}
-        data={data}
+        data={data2}
         margin={{ top: 10, right: 40, left: 40, bottom: 10 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -157,6 +104,9 @@ const ResultInvestPlan = () => {
         <Line type="monotone" dataKey="etfFundAndStock" stroke="#A05069" />
       </LineChart>
       <div className="section-two-invest">
+        <div className="head-invest-title-table">
+          ตารางแสดงเงินเก็บที่ได้จากการลงทุนแบบต่างๆ
+        </div>
         <table className="invest-table">
           <thead>
             <tr>
@@ -172,54 +122,18 @@ const ResultInvestPlan = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>5</td>
-              <td>1000</td>
-              <td>1000</td>
-              <td>1000</td>
-              <td>1000</td>
-              <td>1000</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>1000000</td>
-              <td>1250000</td>
-              <td>1500000</td>
-              <td>1750000</td>
-              <td>2000000</td>
-            </tr>
-            <tr>
-              <td>15</td>
-              <td>1000000</td>
-              <td>1250000</td>
-              <td>1500000</td>
-              <td>1750000</td>
-              <td>2000000</td>
-            </tr>
-            <tr>
-              <td>20</td>
-              <td>1000000</td>
-              <td>1250000</td>
-              <td>1500000</td>
-              <td>1750000</td>
-              <td>2000000</td>
-            </tr>
-            <tr>
-              <td>25</td>
-              <td>1000000</td>
-              <td>1250000</td>
-              <td>1500000</td>
-              <td>1750000</td>
-              <td>2000000</td>
-            </tr>
-            <tr>
-              <td>30</td>
-              <td>1000000</td>
-              <td>1250000</td>
-              <td>1500000</td>
-              <td>1750000</td>
-              <td>2000000</td>
-            </tr>
+            {data2
+              ? data2.map((info) => (
+                  <tr key="info.name">
+                    <td>{info.name.split(' ')[0]}</td>
+                    <td>{info.notRetureRate}</td>
+                    <td>{info.fixedDeposit}</td>
+                    <td>{info.bondFund}</td>
+                    <td>{info.equityFund}</td>
+                    <td>{info.etfFundAndStock}</td>
+                  </tr>))
+              : null}
+
           </tbody>
         </table>
       </div>

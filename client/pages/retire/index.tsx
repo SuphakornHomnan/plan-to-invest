@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 
 const RetirePlan = () => {
-  const [age, setAge] = useState(0)
-  const [retireAge, setRetireAge] = useState(0)
-  const [dieAge, setDieAge] = useState(0)
-  const [assetMonth, setAssetMonth] = useState(0)
+  const [age, setAge] = useState<number>(0)
+  const [retireAge, setRetireAge] = useState<number>(0)
+  const [dieAge, setDieAge] = useState<number>(0)
+  const [assetMonth, setAssetMonth] = useState<number>(0)
   return (
     <>
       <div className="container-retire-plan">
@@ -16,6 +16,7 @@ const RetirePlan = () => {
               className="your-retire-input"
               type="text"
               placeholder="your age now ..."
+              onChange={({ target }) => setAge(parseInt(target.value))}
             />
           </div>
           <div className="your-retire-age-container">
@@ -24,6 +25,7 @@ const RetirePlan = () => {
               className="your-retire-input"
               type="text"
               placeholder="your retire age ..."
+              onChange={({ target }) => setRetireAge(parseInt(target.value))}
             />
           </div>
         </div>
@@ -36,6 +38,7 @@ const RetirePlan = () => {
               className="your-retire-input"
               type="text"
               placeholder="Your die age ..."
+              onChange={({ target }) => setDieAge(parseInt(target.value))}
             />
           </div>
           <div className="your-asset-container">
@@ -46,6 +49,7 @@ const RetirePlan = () => {
               className="your-retire-input"
               type="text"
               placeholder="asset per month ..."
+              onChange={({ target }) => setAssetMonth(parseFloat(target.value))}
             />
           </div>
         </div>

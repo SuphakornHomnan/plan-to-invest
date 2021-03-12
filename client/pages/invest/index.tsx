@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 
 const InvestPlan = () => {
-  const [saving, setSaving] = useState<string | null>(null)
+  const [saving, setSaving] = useState<string | number>(0)
   return (
     <>
       <div className="container-invest-plan">
