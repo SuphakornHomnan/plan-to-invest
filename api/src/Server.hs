@@ -80,26 +80,14 @@ instance ToJSON ResponseInfo
 data ResponseRetireฺ = ResponseRetireฺ
   {
     totalAsset :: Float,
-    liveOnAge :: Float
+    liveOnAge :: Float,
+    keepAssetYear :: Float
   } deriving Generic
 instance ToJSON ResponseRetireฺ
 -- helper function
 calculateAsset :: (Fractional a, Enum a, Num b) => a -> a -> [b] -> a
 calculateAsset ans leverage list =  foldl (\acc cur -> ans + acc +((ans+acc)*(leverage/100)) ) 0 list
 
-dynamicYear year
-  | year >= 0   && year < 5  = 5
-  | year >= 5  && year < 10 = 10
-  | year >= 10 && year < 15 = 15
-  | year >= 15 && year < 20 = 20
-  | year >= 20 && year < 25 = 25
-  | year >= 25 && year < 30 = 30
-  | year >= 30 && year < 35 = 35
-  | year >= 35 && year < 40 = 40
-  | year >= 40 && year < 45 = 45
-  | year >= 45 && year < 50 = 50
-  | year >= 50 && year < 55 = 55
-  | year >= 55 && year < 60 = 60
 yearList :: (Num a, Enum a) => a -> [a]
 yearList amountY = [1..amountY]
 
@@ -123,6 +111,7 @@ resultForInvestPlan :: SavingInfo -> ResponseInfo
 resultForInvestPlan res = ResponseInfo leverage' year' asset'
 
   where 
+        -- total saving in one year 
         ans = foldl (\acc cur -> acc+ value res) 0 [1..12]
         leverage' = multi res
         -- helper function
@@ -135,11 +124,12 @@ resultForInvestPlan res = ResponseInfo leverage' year' asset'
         asset' = handleAssetList year' []
         
 resultForRetirePlan :: RetireInfo -> ResponseRetireฺ
-resultForRetirePlan res = ResponseRetireฺ totalAsset' liveOnAge'
+resultForRetirePlan res = ResponseRetireฺ totalAsset' liveOnAge' keepAssetYear'
 
   where
         totalAsset' = assetPerMonth res*12*(dieAge res - retireAge res)
         liveOnAge' = dieAge res - retireAge res
+        keepAssetYear' = retireAge res - nowAge res
 
 -- secondResultForRetirePlan :: SecondRetireInfo ->
 
