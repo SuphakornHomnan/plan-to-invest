@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import React, { useState, useEffect } from 'react'
 import {
   LineChart,
@@ -7,33 +8,32 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  ReferenceLine,
+  ReferenceLine
 } from 'recharts'
 import { useRouter } from 'next/router'
 import {
   InvestInfo,
   retireInfo,
   responseSaving,
-  chartInfo,
+  chartInfo
 } from '../../../interface/invest'
 import api from '../../../api'
 import { setData } from '../../../helper'
 
 const ResultRetirePlan = () => {
   const router = useRouter()
-  const { age, retireAge, dieAge, assetMonth } = router.query
+  const { age, retireAge, dieAge, assetMonth,keepMonth } = router.query
   const _age = parseFloat(age)
   const _retireAge = parseFloat(retireAge)
   const _dieAge = parseFloat(dieAge)
   const _assetMonth = parseFloat(assetMonth)
-  const [retireInfo, setRetireInfo] = useState<{} | retireInfo>({})
+  const _keepMonth = parseInt(keepMonth)
+  const [retireInfo, setRetireInfo] = useState<retireInfo | {}>({})
   const [resList, setRes] = useState([])
-  const listReutrn = [0, 1.5, 3.5, 6, 10]
+  const listReturn = [0, 1.5, 3.5, 6, 10]
   const [data, setDataState] = useState<chartInfo[] | []>([])
   const [trigger, setTrigger] = useState(true)
 
-  console.log(retireInfo)
-  console.log(resList)
   useEffect(() => {
     async function fetchData() {
       try {
@@ -45,10 +45,10 @@ const ResultRetirePlan = () => {
         })
         setRetireInfo(preInfo.data)
         const res: responseSaving[] = []
-        for (let i = 0; i < listReutrn.length; i++) {
+        for (let i = 0; i < listReturn.length; i++) {
           const secondInfo = await api.post<InvestInfo>('/saving', {
-            value: _assetMonth,
-            multi: listReutrn[i],
+            value: _keepMonth,
+            multi: listReturn[i],
             year: preInfo.data.keepAssetYear,
           })
           res.push(secondInfo.data)
@@ -58,10 +58,10 @@ const ResultRetirePlan = () => {
         alert(error.message)
       }
     }
-    if (_age && _retireAge && _dieAge && _assetMonth) {
+    if (_age && _retireAge && _dieAge && _keepMonth) {
       fetchData()
     }
-  }, [_age, _retireAge, _dieAge, _assetMonth])
+  }, [_age, _retireAge, _dieAge, _keepMonth])
 
   useEffect(() => {
     if (trigger) {
@@ -86,7 +86,7 @@ const ResultRetirePlan = () => {
         <Legend />
         <ReferenceLine
           y={retireInfo.totalAsset}
-          label="Total Asset"
+          label="เงินเป้าหมายที่ต้องการ"
           stroke="red"
         />
         <Line type="monotone" dataKey="notRetureRate" stroke="#E3EAA5" />
